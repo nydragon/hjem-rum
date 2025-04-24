@@ -29,7 +29,9 @@ in
       documentation.enable = lib.mkDefault false;
       imports = [
         self.inputs.hjem.nixosModules.default
-        self.nixosModules.default
+      ];
+      hjem.extraModules = [
+        self.hjemModules.default
       ];
       users.groups.bob = {};
       users.users.bob = {
