@@ -52,16 +52,17 @@
     );
 
     # Provides checks to invoke with 'nix flake check'
-    checks = forAllSystems (system: let
-      mkCheckArgs = testDirectory: {
-        inherit self;
-        inherit (nixpkgs) lib;
-        inherit testDirectory;
-        pkgs = nixpkgs.legacyPackages.${system};
-      };
-    in {
-      hjem-rum-modules = import ./modules/tests (mkCheckArgs ./modules/tests/programs);
-    });
+    checks = forAllSystems (
+      system: let
+        mkCheckArgs = testDirectory: {
+          inherit self;
+          inherit (nixpkgs) lib;
+          inherit testDirectory;
+          pkgs = nixpkgs.legacyPackages.${system};
+        };
+      in
+        import ./modules/tests (mkCheckArgs ./modules/tests/programs)
+    );
 
     # Provide the default formatter to invoke on 'nix fmt'.
     formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
