@@ -43,25 +43,27 @@
       };
     };
   };
-  testScript = ''
-    # Waiting for our user to load.
-    machine.succeed("loginctl enable-linger bob")
-    machine.wait_for_unit("default.target")
+  testScript =
+    #python
+    ''
+      # Waiting for our user to load.
+      machine.succeed("loginctl enable-linger bob")
+      machine.wait_for_unit("default.target")
 
-    # Checks if ncmpcpp config file exists in the expected place.
-    machine.succeed("[ -r ~bob/.config/ncmpcpp/config ]")
+      # Checks if ncmpcpp config file exists in the expected place.
+      machine.succeed("[ -r ~bob/.config/ncmpcpp/config ]")
 
-    # Checks if ncmpcpp bindings file exists in the expected place.
-    machine.succeed("[ -r ~bob/.config/ncmpcpp/bindings ]")
+      # Checks if ncmpcpp bindings file exists in the expected place.
+      machine.succeed("[ -r ~bob/.config/ncmpcpp/bindings ]")
 
-    # These statements copy the specified files from the nix sandbox (left argument)
-    # and write them to a specified location in the host vm (right argument).
-    # By doing this, we can access these files from our vm shell!
-    machine.copy_from_host("${./expected_config}", "/home/bob/expected_config")
-    machine.copy_from_host("${./expected_bindings}", "/home/bob/expected_bindings")
+      # These statements copy the specified files from the nix sandbox (left argument)
+      # and write them to a specified location in the host vm (right argument).
+      # By doing this, we can access these files from our vm shell!
+      machine.copy_from_host("${./expected_config}", "/home/bob/expected_config")
+      machine.copy_from_host("${./expected_bindings}", "/home/bob/expected_bindings")
 
-    # Assert that both files have the expected content.
-    machine.succeed("diff -u -Z -b -B /home/bob/.config/ncmpcpp/config /home/bob/expected_config")
-    machine.succeed("diff -u -Z -b -B /home/bob/.config/ncmpcpp/bindings /home/bob/expected_bindings")
-  '';
+      # Assert that both files have the expected content.
+      machine.succeed("diff -u -Z -b -B /home/bob/.config/ncmpcpp/config /home/bob/expected_config")
+      machine.succeed("diff -u -Z -b -B /home/bob/.config/ncmpcpp/bindings /home/bob/expected_bindings")
+    '';
 }
