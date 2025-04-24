@@ -381,7 +381,7 @@ WIP
 
 ### Tests<a name="tests"></a>
 
-WIP
+Please refer to the [testing documentation](./TESTING.md) for more information on how tests work.
 
 ## Reviewing a PR<a name="reviewing-a-pr"></a>
 
