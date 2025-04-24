@@ -32,6 +32,12 @@ You can also debug your tests through a Python REPL by running:
 nix run .#checks.<arch>.vm-test-run-<name>.driver -- --interactive
 ```
 
+You can also debug your tests through a python repl by running:
+
+```bash
+nix run .#checks.<arch>.vm-test-run-<name>.driver -- --interactive
+```
+
 [^1]: Although both guides refer to `lib.tests.runNixOSTest` instead of `runTest`, the former is just a wrapper around the latter, abstracting certain concepts, so the code ran by them should be interchangeable between one another.
 
 [ncmpcpp-test-module]: ../modules/tests/programs/ncmpcpp/ncmpcpp.nix
