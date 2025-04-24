@@ -1,0 +1,17 @@
+name: "Integration Tests"
+
+on:
+  pull_request:
+    branches:
+      - main
+    path:
+      - modules/**
+
+jobs:
+  integration-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4.1.7
+      - uses: DeterminateSystems/nix-installer-action@v17
+      - run: |
+          nix flake check

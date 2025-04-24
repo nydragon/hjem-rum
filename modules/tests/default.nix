@@ -16,34 +16,43 @@
   inherit (lib.trivial) pipe;
   inherit (lib.strings) hasSuffix;
   inherit (lib.filesystem) listFilesRecursive;
+  inherit (lib.attrsets) listToAttrs;
+
   nixos-lib = import (pkgs.path + "/nixos/lib") {};
+
   tests = pipe testDirectory [
     listFilesRecursive
     (filter (hasSuffix ".nix"))
-    (filter (x: !hasSuffix "lib.nix" x))
+    (map runTest)
+    (map (test: {
+      inherit (test) name;
+      value = test;
+    }))
+    listToAttrs
   ];
-in
-  (nixos-lib.runTest {
-    hostPkgs = pkgs;
-    defaults = {
-      documentation.enable = lib.mkDefault false;
-      imports = [
-        self.inputs.hjem.nixosModules.default
-      ];
-      hjem.extraModules = [
-        self.hjemModules.default
-      ];
-      users.groups.bob = {};
-      users.users.bob = {
-        isNormalUser = true;
-        password = "";
+
+  runTest = test:
+    nixos-lib.runTest {
+      hostPkgs = pkgs;
+      defaults = {
+        documentation.enable = lib.mkDefault false;
+        imports = [
+          self.inputs.hjem.nixosModules.default
+        ];
+        hjem.extraModules = [
+          self.hjemModules.default
+        ];
+        users.groups.bob = {};
+        users.users.bob = {
+          isNormalUser = true;
+          password = "";
+        };
       };
+      node.specialArgs = {
+        inherit self;
+        inherit lib;
+      };
+      imports = [test];
     };
-    node.specialArgs = {
-      inherit self;
-      inherit lib;
-    };
-    imports = tests;
-  })
-  .config
-  .result
+in
+  tests
