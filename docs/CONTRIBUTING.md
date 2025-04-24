@@ -369,7 +369,7 @@ WIP
 
 ### Tests
 
-WIP
+Please refer to the [testing documentation](./TESTING.md) for more information on how tests work.
 
 ## Reviewing a PR
 
