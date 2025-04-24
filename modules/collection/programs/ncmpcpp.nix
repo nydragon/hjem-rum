@@ -21,7 +21,7 @@ in {
     package = mkPackageOption pkgs "ncmpcpp" {
       extraDescription = ''
         You can use an override to toggle certain features like the visualizer, a clock screen, and more.
-               Please check out the package source for a complete list.
+        Please check out the package source for a complete list.
       '';
     };
 
@@ -45,9 +45,9 @@ in {
       type = attrsOf (listOf ncmpcppBindingType);
       default = {};
       description = ''
-               Custom bindings configuration written to `${config.directory}/.config/ncmpcpp/bindings`.
-               Please reference ncmpcpp(1) (ncmpcpp's man page) to configure it accordingly, or access
-               https://github.com/ncmpcpp/ncmpcpp/blob/master/doc/bindings for an example.
+        Custom bindings configuration written to `${config.directory}/.config/ncmpcpp/bindings`.
+        Please reference ncmpcpp(1) (ncmpcpp's man page) to configure it accordingly, or access
+        https://github.com/ncmpcpp/ncmpcpp/blob/master/doc/bindings for an example.
 
         The lists are separated between keys, for actions ran on keypresses, and commands, for
         actions ran on commands. The option's example demonstrates this greatly.
