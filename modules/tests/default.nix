@@ -1,11 +1,13 @@
-# Helper function to import the testing framework with special args.
-#
-# This function imports runTest from nixpkgs:/nixos/lib/testing-lib/runTest
-# to run our test derivation (the argument of this function),
-# passing some args in the process, notably self, allowing us to
-# use inputs and outputs from our flake.
-#
-# Usage: (import ./location-of-lib.nix) {test-script-here}
+/*
+Helper function to import the testing framework with special args.
+
+This function imports runTest from nixpkgs:/nixos/lib/testing-lib/runTest
+to run our test derivation (the argument of this function),
+passing some args in the process, notably self, allowing us to
+use inputs and outputs from our flake.
+
+Usage: (import ./location-of-lib.nix) {test-script-here}
+*/
 {
   pkgs,
   self,
@@ -20,6 +22,23 @@
 
   nixos-lib = import (pkgs.path + "/nixos/lib") {};
 
+  runTest = test:
+    nixos-lib.runTest {
+      hostPkgs = pkgs;
+      defaults = {
+        documentation.enable = lib.mkDefault false;
+        imports = [self.inputs.hjem.nixosModules.default];
+        hjem.extraModules = [self.hjemModules.default];
+        users.groups.bob = {};
+        users.users.bob = {
+          isNormalUser = true;
+          password = "";
+        };
+      };
+      node.specialArgs = {inherit self lib;};
+      imports = [test];
+    };
+
   tests = pipe testDirectory [
     listFilesRecursive
     (filter (hasSuffix ".nix"))
@@ -30,29 +49,5 @@
     }))
     listToAttrs
   ];
-
-  runTest = test:
-    nixos-lib.runTest {
-      hostPkgs = pkgs;
-      defaults = {
-        documentation.enable = lib.mkDefault false;
-        imports = [
-          self.inputs.hjem.nixosModules.default
-        ];
-        hjem.extraModules = [
-          self.hjemModules.default
-        ];
-        users.groups.bob = {};
-        users.users.bob = {
-          isNormalUser = true;
-          password = "";
-        };
-      };
-      node.specialArgs = {
-        inherit self;
-        inherit lib;
-      };
-      imports = [test];
-    };
 in
   tests
