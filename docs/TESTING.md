@@ -1,4 +1,6 @@
-Hjem Rum's testing system is designed with simplicity in mind, so we shy away from other testing frameworks and stick with `runTest`, from the [internal NixOs lib](https://github.com/NixOS/nixpkgs/tree/master/nixos/lib/testing) located in the nixpkgs monorepo. There are no non-standard abstractions in regards to writing the tests, so they should be written just like any other test that uses the NixOS Test Driver.
+# Testing setup for modules
+
+Hjem Rum's testing system is designed with simplicity in mind, so we shy away from other testing frameworks and stick with `runTest`, from the [internal NixOS lib][nixos-testing] located in the nixpkgs monorepo. There are no non-standard abstractions in regards to writing the tests, so they should be written just like any other test that uses the NixOS Test Driver.
 
 ## Creating tests
 
@@ -13,7 +15,7 @@ checks = hjem-rum-services = import ./modules/tests (mkCheckArgs ./modules/tests
 
 ## Writing tests
 
-Tests for Hjem Rum are written just like any other test, so it might be worth to take a read at how NixOS tests work. [nix.dev] provides a [useful guide](https://nix.dev/tutorials/nixos/integration-testing-using-virtual-machines.html), as does the [NixOs Manual](https://nixos.org/manual/nixos/stable/index.html#sec-calling-nixos-tests)[^1], both detailing how to use the framework.
+Tests for Hjem Rum are written just like any other test, so it might be worth to take a read at how NixOS tests work. [nix.dev] provides a [useful guide][nixdev-testing], as does the [NixOS Manual][nixos-running-tests][^1], both detailing how to use the framework.
 
 Our test system has some pre-defined things aiming at avoid boilerplate code:
 
@@ -22,7 +24,7 @@ Our test system has some pre-defined things aiming at avoid boilerplate code:
 
 `self`, `lib` and `pkgs` are also passed to every test module, so you're free to use them as you will.
 
-The [ncmpcpp test module](../modules/tests/programs/ncmpcpp/ncmpcpp.nix) was written to serve as an example for future tests, and provides comments for each step of the `testScript`. Care should be taken to wait for the proper systemd targets to be reached, change users to run commands, and avoid other possible footguns. The approach this module uses to test its configuration is to have a file for each configuration alongside it, which then gets passed to the test VM and gets evaluated with diff. You can use other approaches if its more convenient, that's just a suggestion.
+The [ncmpcpp test module][ncmpcpp-test-module] was written to serve as an example for future tests, and provides comments for each step of the `testScript`. Care should be taken to wait for the proper systemd targets to be reached, change users to run commands, and avoid other possible footguns. The approach this module uses to test its configuration is to have a file for each configuration alongside it, which then gets passed to the test VM and gets evaluated with diff. You can use other approaches if its more convenient, that's just a suggestion.
 
 You can also debug your tests through a Python REPL by running:
 
@@ -32,4 +34,8 @@ nix run .#checks.<arch>.vm-test-run-<name>.driver -- --interactive
 
 [^1]: Although both guides refer to `lib.tests.runNixOSTest` instead of `runTest`, the former is just a wrapper around the latter, abstracting certain concepts, so the code ran by them should be interchangeable between one another.
 
+[ncmpcpp-test-module]: ../modules/tests/programs/ncmpcpp/ncmpcpp.nix
 [nix.dev]: https://nix.dev/
+[nixdev-testing]: https://nix.dev/tutorials/nixos/integration-testing-using-virtual-machines.html
+[nixos-running-tests]: https://nixos.org/manual/nixos/stable/index.html#sec-calling-nixos-tests
+[nixos-testing]: https://github.com/NixOS/nixpkgs/tree/master/nixos/lib/testing
