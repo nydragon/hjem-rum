@@ -1,5 +1,5 @@
 {
-  name = "ncmpcpp-test";
+  name = "programs-ncmpcpp";
   nodes.machine = {
     hjem.users.bob.rum = {
       programs.ncmpcpp = {

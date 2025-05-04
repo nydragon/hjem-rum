@@ -1,5 +1,5 @@
 {pkgs, ...}: {
-  name = "fish-test";
+  name = "programs-fish";
   nodes.machine = {
     hjem.users.bob = {
       environment.sessionVariables = {

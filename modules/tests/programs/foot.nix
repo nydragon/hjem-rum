@@ -12,7 +12,7 @@ let
     };
   };
 in {
-  name = "foot-test";
+  name = "programs-foot";
   nodes.machine = {
     hjem.users.bob.rum = {
       programs.foot = {
