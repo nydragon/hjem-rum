@@ -2,10 +2,10 @@ name: "Integration Tests"
 
 on:
   pull_request:
-    #branches:
-      #- main
-    #path:
-      #- modules/**
+    branches:
+      - main
+    path:
+      - modules/**
 
 jobs:
   create-test-plan:
@@ -36,7 +36,7 @@ jobs:
       - uses: actions/checkout@v4.1.7
       - uses: DeterminateSystems/nix-installer-action@v17
       - run: |
-         nix run .#checks.x86_64-linux.${{ matrix.check }}.driver
+          nix run .#checks.x86_64-linux.${{ matrix.check }}.driver
 
   integration-tests:
     name: Run all checks
