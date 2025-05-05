@@ -33,6 +33,7 @@
         projectRootFile = "flake.nix";
         programs.alejandra.enable = true;
         programs.deno.enable = true;
+        programs.shfmt.enable = true;
 
         settings = {
           deno.includes = ["*.md"];
@@ -75,11 +76,10 @@
 
     # Provides checks to invoke with 'nix flake check'
     checks = forAllSystems (
-      system:
+      pkgs:
         import ./modules/tests {
-          inherit self;
+          inherit self pkgs;
           inherit (nixpkgs) lib;
-          pkgs = nixpkgs.legacyPackages.${system};
           testDirectory = ./modules/tests/programs;
         }
     );
