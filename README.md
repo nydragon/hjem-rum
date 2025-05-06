@@ -54,14 +54,17 @@ inputs = {
     hjem = {
         url = "github:feel-co/hjem";
         # You may want hjem to use your defined nixpkgs input to
-        # minimize redundancies
+        # minimize redundancies.
         inputs.nixpkgs.follows = "nixpkgs";
     };
     hjem-rum = {
         url = "github:snugnug/hjem-rum";
         # You may want hjem-rum to use your defined nixpkgs input to
-        # minimize redundancies
+        # minimize redundancies.
         inputs.nixpkgs.follows = "nixpkgs";
+        # Same goes for hjem, to avoid discrepancies between the version
+        # you use directly and the one hjem-rum uses.
+        inputs.hjem.follows = "hjem";
     };
 };
 

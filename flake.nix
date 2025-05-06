@@ -7,6 +7,10 @@
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    hjem = {
+      url = "github:feel-co/hjem";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -29,6 +33,7 @@
         projectRootFile = "flake.nix";
         programs.alejandra.enable = true;
         programs.deno.enable = true;
+        programs.shfmt.enable = true;
 
         settings = {
           deno.includes = ["*.md"];
@@ -67,6 +72,16 @@
           '';
         };
       }
+    );
+
+    # Provides checks to invoke with 'nix flake check'
+    checks = forAllSystems (
+      pkgs:
+        import ./modules/tests {
+          inherit self pkgs;
+          inherit (nixpkgs) lib;
+          testDirectory = ./modules/tests/programs;
+        }
     );
 
     # Provide the default formatter to invoke on 'nix fmt'.

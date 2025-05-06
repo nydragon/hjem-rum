@@ -1,0 +1,54 @@
+name: "Integration Tests"
+
+on:
+  pull_request:
+    branches:
+      - main
+    path:
+      - modules/**
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  create-test-plan:
+    name: Create test plan
+
+    runs-on: ubuntu-latest
+    outputs:
+      checks: ${{ steps.get-changed-checks.outputs.checks }}
+      run-all-checks: ${{ steps.get-changed-checks.outputs.run-all-checks }}
+    steps:
+      - uses: actions/checkout@v4.1.7
+        with:
+          fetch-depth: 0 # Need the entire history to properly calculate the diff
+      - uses: DeterminateSystems/nix-installer-action@v17
+      - name: Get changed checks
+        id: get-changed-checks
+        run: ./.github/workflows/create-test-plan.sh
+
+  run-checks:
+    name: Run select checks
+    runs-on: ubuntu-latest
+    needs: create-test-plan
+    if: ${{ needs.create-test-plan.outputs.run-all-checks == 'false' && needs.create-test-plan.outputs.checks != '[]' && needs.create-test-plan.outputs.checks != '' }}
+    strategy:
+      matrix:
+        check: ${{ fromJSON(needs.create-test-plan.outputs.checks) }}
+    steps:
+      - uses: actions/checkout@v4.1.7
+      - uses: DeterminateSystems/nix-installer-action@v17
+      - run: |
+          nix run .#checks.x86_64-linux.${{ matrix.check }}.driver
+
+  integration-tests:
+    name: Run all checks
+    runs-on: ubuntu-latest
+    needs: create-test-plan
+    if: ${{ needs.create-test-plan.outputs.run-all-checks == 'true' }}
+    steps:
+      - uses: actions/checkout@v4.1.7
+      - uses: DeterminateSystems/nix-installer-action@v17
+      - run: |
+          nix flake check
