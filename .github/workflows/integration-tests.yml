@@ -52,3 +52,27 @@ jobs:
       - uses: DeterminateSystems/nix-installer-action@v17
       - run: |
           nix flake check
+
+  result:
+    name: Verify test results
+    runs-on: ubuntu-latest
+    if: ${{ always() }}
+    needs: [integration-tests, run-checks]
+    steps:
+      - run: |
+          if [ "${{ needs.integration-tests.result }}" = "failure" ] || [ "${{ needs.run-checks.result }}" = "failure" ]; then
+            echo Previous step failed, blocking PR.
+            exit 1;
+          fi
+
+          if [ "${{ needs.integration-tests.result }}" = "success" ] || [ "${{ needs.run-checks.result }}" = "success" ]; then
+            echo Previous step succeeded, PR is good to go.
+            exit 0;
+          fi
+
+          if [ "${{ needs.integration-tests.result }}" = "skipped" ] && [ "${{ needs.run-checks.result }}" = "skipped" ]; then
+            echo No check needed, PR is good to go.
+            exit 0;
+          fi
+
+          exit 1;
