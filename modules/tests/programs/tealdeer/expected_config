@@ -15,5 +15,7 @@ foreground = "green"
 foreground = "blue"
 underline = true
 
+
+
 [updates]
 auto_update = true
