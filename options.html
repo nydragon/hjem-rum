@@ -221,7 +221,7 @@
     <details class="toc-category">
       <summary title="rum.misc">
         <span>rum.misc</span>
-        <span class="toc-count">6</span>
+        <span class="toc-count">7</span>
       </summary>
       <ul>
         
@@ -260,6 +260,14 @@
         </li>
         
         <li>
+          <a href='#option-rum-misc-gtk-gtk2Location' title="rum.misc.gtk.gtk2Location">
+            gtk.gtk2Location
+            
+            
+          </a>
+        </li>
+        
+        <li>
           <a href='#option-rum-misc-gtk-packages' title="rum.misc.gtk.packages">
             gtk.packages
             
@@ -283,7 +291,7 @@
     <details class="toc-category">
       <summary title="rum.programs">
         <span>rum.programs</span>
-        <span class="toc-count">146</span>
+        <span class="toc-count">151</span>
       </summary>
       <ul>
         
@@ -1282,6 +1290,46 @@
         </li>
         
         <li>
+          <a href='#option-rum-programs-yazi-enable' title="rum.programs.yazi.enable">
+            yazi.enable
+            
+            
+          </a>
+        </li>
+        
+        <li>
+          <a href='#option-rum-programs-yazi-keymap' title="rum.programs.yazi.keymap">
+            yazi.keymap
+            
+            
+          </a>
+        </li>
+        
+        <li>
+          <a href='#option-rum-programs-yazi-package' title="rum.programs.yazi.package">
+            yazi.package
+            
+            
+          </a>
+        </li>
+        
+        <li>
+          <a href='#option-rum-programs-yazi-settings' title="rum.programs.yazi.settings">
+            yazi.settings
+            
+            
+          </a>
+        </li>
+        
+        <li>
+          <a href='#option-rum-programs-yazi-theme' title="rum.programs.yazi.theme">
+            yazi.theme
+            
+            
+          </a>
+        </li>
+        
+        <li>
           <a href='#option-rum-programs-zed-enable' title="rum.programs.zed.enable">
             zed.enable
             
@@ -1809,6 +1857,21 @@ a CSS file from your theme's package (or both).</p>
 </body></html></div>
   <div class="option-default">Default: <code>false</code></div>
   <div class="option-example">Example: <code>true</code></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/misc/gtk.nix" target="_blank">&lt;hjem-rum/modules/collection/misc/gtk.nix&gt;</a></code></div>
+</div>
+<div class="option" id="option-rum-misc-gtk-gtk2Location">
+  <h3 class="option-name">
+    <a href="#option-rum-misc-gtk-gtk2Location" class="option-anchor">rum.misc.gtk.gtk2Location</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>absolute path</code></div>
+  <div class="option-description"><html><head></head><body><p>The location relative to <code class="env-var">$HOME</code> to write the GTK-2.0 settings to.
+By default, apps search at <code class="file-path">$HOME/.gtkrc-2.0</code>, but the environmental
+variable <code class="env-var">GTK2_RC_FILES</code> can be set to a different location.</p>
+</body></html></div>
+  <div class="option-default">Default: <code>"$HOME/.gtkrc-2.0"</code></div>
+  <div class="option-example">Example: <code>".config/gtk-2.0/gtkrc"</code></div>
   <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/misc/gtk.nix" target="_blank">&lt;hjem-rum/modules/collection/misc/gtk.nix&gt;</a></code></div>
 </div>
 <div class="option" id="option-rum-misc-gtk-packages">
@@ -4001,6 +4064,92 @@ for more information.</p>
   "workbench.colorTheme" = "Catppuccin Mocha";
 }</code></pre></div>
   <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/programs/vscode.nix" target="_blank">&lt;hjem-rum/modules/collection/programs/vscode.nix&gt;</a></code></div>
+</div>
+<div class="option" id="option-rum-programs-yazi-enable">
+  <h3 class="option-name">
+    <a href="#option-rum-programs-yazi-enable" class="option-anchor">rum.programs.yazi.enable</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>boolean</code></div>
+  <div class="option-description"><html><head></head><body><p>Whether to enable yazi file manager.</p>
+</body></html></div>
+  <div class="option-default">Default: <code>false</code></div>
+  <div class="option-example">Example: <code>true</code></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/programs/yazi.nix" target="_blank">&lt;hjem-rum/modules/collection/programs/yazi.nix&gt;</a></code></div>
+</div>
+<div class="option" id="option-rum-programs-yazi-keymap">
+  <h3 class="option-name">
+    <a href="#option-rum-programs-yazi-keymap" class="option-anchor">rum.programs.yazi.keymap</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>TOML value</code></div>
+  <div class="option-description"><html><head></head><body><p>The keymap configurations converted to TOML and written to <code class="file-path">$XDG_CONFIG_HOME/yazi/keymap.toml</code>.
+Please reference <a href="https://yazi-rs.github.io/docs/configuration/keymap">yazi's keymap configuration documentation</a> for configuration options.</p>
+</body></html></div>
+  <div class="option-default">Default: <code>{ }</code></div>
+  <div class="option-example">Example: <pre><code>{
+  mgr = {
+    prepend_keymap = [
+      {
+        desc = "Single command with `Ctrl + a`";
+        on = "&lt;C-a&gt;";
+        run = "my-cmd1";
+      }
+    ];
+  };
+}</code></pre></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/programs/yazi.nix" target="_blank">&lt;hjem-rum/modules/collection/programs/yazi.nix&gt;</a></code></div>
+</div>
+<div class="option" id="option-rum-programs-yazi-package">
+  <h3 class="option-name">
+    <a href="#option-rum-programs-yazi-package" class="option-anchor">rum.programs.yazi.package</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>null or package</code></div>
+  <div class="option-description"><html><head></head><body><p>The yazi package to use.</p>
+</body></html></div>
+  <div class="option-default">Default: <code>pkgs.yazi</code></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/programs/yazi.nix" target="_blank">&lt;hjem-rum/modules/collection/programs/yazi.nix&gt;</a></code></div>
+</div>
+<div class="option" id="option-rum-programs-yazi-settings">
+  <h3 class="option-name">
+    <a href="#option-rum-programs-yazi-settings" class="option-anchor">rum.programs.yazi.settings</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>TOML value</code></div>
+  <div class="option-description"><html><head></head><body><p>The configurations converted to TOML and written to <code class="file-path">$XDG_CONFIG_HOME/yazi/yazi.toml</code>.
+Please reference <a href="https://yazi-rs.github.io/docs/configuration/yazi">yazi's configuration documentation</a> for configuration options.</p>
+</body></html></div>
+  <div class="option-default">Default: <code>{ }</code></div>
+  <div class="option-example">Example: <pre><code>{
+  mgr = {
+    show_hidden = true;
+  };
+}</code></pre></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/programs/yazi.nix" target="_blank">&lt;hjem-rum/modules/collection/programs/yazi.nix&gt;</a></code></div>
+</div>
+<div class="option" id="option-rum-programs-yazi-theme">
+  <h3 class="option-name">
+    <a href="#option-rum-programs-yazi-theme" class="option-anchor">rum.programs.yazi.theme</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>TOML value</code></div>
+  <div class="option-description"><html><head></head><body><p>The keymap configurations converted to TOML and written to <code class="file-path">$XDG_CONFIG_HOME/yazi/theme.toml</code>.
+Please reference <a href="https://yazi-rs.github.io/docs/configuration/theme">yazi's theming configuration documentation</a> for configuration options.</p>
+</body></html></div>
+  <div class="option-default">Default: <code>{ }</code></div>
+  <div class="option-example">Example: <pre><code>{
+  flavor = {
+    dark = "dracula";
+    light = "gruvbox";
+  };
+}</code></pre></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/programs/yazi.nix" target="_blank">&lt;hjem-rum/modules/collection/programs/yazi.nix&gt;</a></code></div>
 </div>
 <div class="option" id="option-rum-programs-zed-enable">
   <h3 class="option-name">
